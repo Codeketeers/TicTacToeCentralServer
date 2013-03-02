@@ -1,0 +1,80 @@
+<html>
+<head>
+	<title>Documentation for the central server</title>
+	<style>
+		.function {
+			font-size: 1.5em;
+			font-weight: bolder;
+		}
+		.inParam {
+			font-weight: bold;
+			color: #3333ff;
+		}
+		.outParam {
+			font-weight: bold;
+			color: #ff3333;
+		}
+	</style>
+<head>
+
+<body>
+<div>
+	<h3>Table of Contents</h3>
+	<a href='#1'>Pairing/handshaking</a><br />
+	<a href='#2'>Game Play</a><br />
+</div>
+<div>
+	<h3>General Info</h3>
+	<span>All pages can be sent a key value pair of "Debug" = "true" to view more detailed output <br /><br />This output, however, is not currently in json form, so it may cause errors unless handled correctly.</span><br />
+	<span>Any variable inside brackets [ ] is optional for both sending and recieving</span><br />
+</div>
+<div>
+<pre>
+<a name='#1' class='function'>Pairing - ServerPairing.php</a>
+	Input -
+		<span class='inParam'>challenge</span> = text
+			- name of who you want to challenge
+		<span class='inParam'>from</span> = text
+			- your name
+	
+	Output -
+		<span class='outParam'>gameID</span> = # 
+			- id of the game, needed to be sent for each move
+		<span class='outParam'>message</span> = text 
+			- a human readable message about the challenge
+		<span class='outParam'>challenger</span> = text
+			- name of the opponent
+		<span class='outParam'>[yourTurn]</span> = true 
+			- you will only recieve this if you play first
+		<span class='outParam'>[x]</span> = # 
+			- x loc of first play if you play second
+		<span class='outParam'>[y]</span> = # 
+			- y loc of first play if you play second
+		<span class='outParam'>[error]</span> = text
+			- all encompassing error, shows for incorrect values sent or server timeout
+</pre>
+<pre>
+<a name='#2'  class='function'>Play - play.php</a>
+	Regular tic-tac-toe play function
+	
+	Input -
+		<span class='inParam'>x</span> = #
+			- x location to play at
+		<span class='inParam'>y</span> = #
+			- y location to play at
+		<span class='inParam'>from</span> = text
+			- your name
+		<span class='inParam'>gameID</span> = #
+			- the game id given from pairing
+		
+	Output - 
+		<span class='outParam'>x</span> = #
+			- x location opponent chose
+		<span class='outParam'>y</span> = #
+			- y location opponent chose
+		<span class='outParam'>[error]</span> = text
+			- all encompassing error, shows for incorrect values sent or server timeout
+</pre>
+</div>
+</body>
+</html>
