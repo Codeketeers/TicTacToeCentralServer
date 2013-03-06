@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 01, 2013 at 03:17 AM
+-- Generation Time: Mar 06, 2013 at 05:51 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.3.13
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `challenges` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `accepted` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -60,11 +60,12 @@ CREATE TABLE IF NOT EXISTS `move` (
   `MoveID` int(11) NOT NULL AUTO_INCREMENT,
   `GameID` int(11) NOT NULL,
   `Player` varchar(25) NOT NULL,
-  `X` int(11) NOT NULL,
-  `Y` int(11) NOT NULL,
+  `X` int(11) NOT NULL DEFAULT '-1',
+  `Y` int(11) NOT NULL DEFAULT '-1',
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `flag` varchar(25) NOT NULL,
   PRIMARY KEY (`MoveID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=99 ;
 
 --
 -- Triggers `move`

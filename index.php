@@ -24,7 +24,7 @@ p(print_r($_REQUEST, true));
 
 if (isset($_REQUEST['challenge'])) {
 	$sql = "SELECT * FROM challenges WHERE Challengee='{$_REQUEST['from']}' AND Challenger='{$_REQUEST['challenge']}'";
-	$result = mysql_query($sql) or die(mysql_error() . "<br />" . $sql);
+	$result = mysql_query($sql) or die(mysql_error() . "<br >" . $sql);
 	
 	if ($row = mysql_fetch_assoc($result)) {
 		p("Challenge found");

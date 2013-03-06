@@ -26,6 +26,12 @@ foreach($_REQUEST as &$val) {
 
 p(print_r($_REQUEST, true));
 
+function myReturn($key, $val) {
+	$return[$key] = $val;
+	echo json_encode($return);
+	exit;
+}
+
 function waitForPlay($gameID, $timeout, $turn) {
 	GLOBAL $return;
 
@@ -37,12 +43,17 @@ function waitForPlay($gameID, $timeout, $turn) {
 		$result = mysql_query($sql);
 		
 		if (mysql_num_rows($result) > 0) {
-			$sql = "SELECT X,Y FROM move WHERE GameID='$gameID' ORDER BY MoveID DESC"; //get the most recent move
+			$sql = "SELECT X,Y,flag,time FROM move WHERE GameID='$gameID' ORDER BY MoveID DESC"; //get the most recent move
 			$result = mysql_query($sql);
 			$row = mysql_fetch_assoc($result);
 			
 			$return['x'] = $row['X'];
 			$return['y'] = $row['Y'];
+			$return['time'] = $row['time'];
+			
+			if ($row['flag'] !== "") {
+				$return['flag'] = $row['flag'];
+			}
 			
 			return;
 		}

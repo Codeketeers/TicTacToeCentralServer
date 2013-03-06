@@ -22,6 +22,7 @@
 	<h3>Table of Contents</h3>
 	<a href='#1'>Pairing/handshaking</a><br />
 	<a href='#2'>Game Play</a><br />
+	<a href='#2'>Game Log</a><br />
 </div>
 <div>
 	<h3>General Info</h3>
@@ -66,12 +67,43 @@
 			- your name
 		<span class='inParam'>gameID</span> = #
 			- the game id given from pairing
-		
+		<span class='inParam'>[flags]</span> = enum('winning move', 'draw move', 'challenge win', 'challenge move', 'accept loss')
+			-  sends extra information such as 
+				- 'winning move' when you play the winning move
+				- 'draw move' when you play the 8 move of a game where there is no winner 
+				- 'challenge win' to challenge the opponents 'winning move', if you do not send 'challenge win', then you are admitting defeat
+				- 'challenge move' to challenge the most recent opponents move, if you do not send 'challenge move', then the move is considered valid
+				- 'accept loss' after you recieve and validate a 'winning move'
+				
+				*if either 'challenge move' or 'challenge win' are sent then the game is invalidated and the match is exited, x and y are also ignored
+				
 	Output - 
 		<span class='outParam'>x</span> = #
 			- x location opponent chose
 		<span class='outParam'>y</span> = #
 			- y location opponent chose
+		<span class='outParam'>time</span> = timestamp
+			- timestamp of when the move was submitted
+		<span class='outParam'>[newGameID]</span> = #
+			- game id for the next game in the match if there is one
+		<span class='outParam'>[flags]</span> = enum('winning move', 'draw move', 'challenge win', 'challenge move')
+			- the flags, if any, sent to the server from the opponent
+		<span class='outParam'>[error]</span> = text
+			- all encompassing error, shows for incorrect values sent or server timeout
+</pre>
+<pre>
+<a name='#2'  class='function'>Game Log - RequestLog.php</a>
+	Request a log of the game
+	
+	Input -
+		<span class='inParam'>from</span> = text
+			- your name
+		<span class='inParam'>gameID</span> = #
+			- the game id given from pairing
+		
+	Output - 
+		<span class='outParam'>log</span> = text
+			- a log of the game
 		<span class='outParam'>[error]</span> = text
 			- all encompassing error, shows for incorrect values sent or server timeout
 </pre>
