@@ -1,7 +1,7 @@
 # Table of Contents #
-1. [Pairing/Handshaking](#1)
-2. [Game Play](#2)
-3. [Game Log](#3)
+1. [Pairing/Handshaking](#-1-pairinghandshaking---serverpairingphp)
+2. [Game Play](#-game-play---playphp)
+3. [Game Log](#-game-log---requestlogphp)
 
 ## General Info ##
 All pages can be sent a key value pair of "Debug" = "true" to view more detailed output 
@@ -10,7 +10,7 @@ This output, however, is not currently in JSON form, so it may cause errors unle
 
 Any variable inside brackets [ ] is optional for both sending and receiving
 
-## <a name="#1"/> 1. Pairing/Handshaking - ServerPairing.php ##
+## 1. Pairing/Handshaking - ServerPairing.php ##
 	Input - 
 		challenge = text
 			- Name of who you want to challenge.
@@ -34,7 +34,7 @@ Any variable inside brackets [ ] is optional for both sending and receiving
 		[error] = text
 			- All encompassing error, shows for incorrect values sent or server timeout.
 
-## <a name="#2"/> Game Play - Play.php ##
+## 2. Game Play - Play.php ##
 Regular tic-tac-toe play function
 
 	Input -
@@ -68,7 +68,7 @@ Regular tic-tac-toe play function
 			[error] = text
 				- All encompassing error, shows for incorrect values sent or server timeout.
 
-## <a name="#3"/> Game Log - RequestLog.php ##
+## 3. Game Log - RequestLog.php ##
 Request a log of the game
 
 	Input -
