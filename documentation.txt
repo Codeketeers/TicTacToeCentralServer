@@ -1,0 +1,42 @@
+Pairing - ServerPairing.php
+
+	Input -
+		challenge - name of who you want to challenge
+		from - your name
+	
+	Output -
+		gameID	= # 
+			- id of the game, needed to be sent for each move
+		message = text 
+			- a human readable message about the challenge
+		challenger = text
+			- name of the opponent
+		[yourTurn] = true 
+			- you will only recieve this if you play first
+		[x] = # 
+			- x loc of first play if you play second
+		[y] = # 
+			- y loc of first play if you play second
+		[error] = text
+			- all encompassing error, shows for incorrect values sent or server timeout
+			
+Play - play.php
+	Regular tic-tac-toe play function
+	
+	Input -
+		x = #
+			- x location to play at
+		y = #
+			- y location to play at
+		from = text
+			- your name
+		gameID = #
+			- the game id given from pairing
+		
+	Output - 
+		x = #
+			- x location opponent chose
+		y = #
+			- y location opponent chose
+		[error] = text
+			

@@ -2,7 +2,7 @@
 include "common.php";
 
 if (isset($_REQUEST['challenge'])) {
-	$sql = "SELECT * FROM challenges WHERE Challengee='{$_REQUEST['from']}' AND Challenger='{$_REQUEST['challenge']}'";
+	$sql = "SELECT * FROM challenges WHERE Challengee='{$_REQUEST['from']}' AND Challenger='{$_REQUEST['challenge']}' AND accepted=0";
 	$result = mysql_query($sql) or die(mysql_error() . "<br />" . $sql);
 	
 	if ($row = mysql_fetch_assoc($result)) {
@@ -12,7 +12,7 @@ if (isset($_REQUEST['challenge'])) {
 		$result = mysql_query($sql) or die(mysql_error() . "<br />" . $sql);
 		
 		//clear the challenge
-		$sql = "DELETE FROM challenges WHERE ID='{$row['ID']}'";
+		$sql = "UPDATE challenges SET accepted='1' WHERE ID='{$row['ID']}'";
 		$result = mysql_query($sql) or die(mysql_error() . "<br />" . $sql);
 		
 		$return["message"] = "You have accepted " . $row['Challenger'] . " challenge";
@@ -30,29 +30,24 @@ if (isset($_REQUEST['challenge'])) {
 		$sql = "INSERT INTO challenges SET Challenger='{$_REQUEST['from']}', Challengee='{$_REQUEST['challenge']}'";
 		$result = mysql_query($sql) or die(mysql_error() . "<br />" . $sql);
 		
-		$sql = "SELECT ID FROM challenges WHERE Challenger='{$_REQUEST['from']}' AND Challengee='{$_REQUEST['challenge']}'";
+		$sql = "SELECT ID FROM challenges WHERE Challenger='{$_REQUEST['from']}' AND Challengee='{$_REQUEST['challenge']}' AND Accepted='0' ORDER BY ID DESC";
 		$result = mysql_query($sql) or die(mysql_error() . "<br />" . $sql);
 		
 		$row = mysql_fetch_assoc($result);
 		
-		//wait for pairing
-		$notFound = true;
-		
-		$sql = "SELECT * FROM challenges WHERE ID='{$row['ID']}'";
+		$sql = "SELECT * FROM challenges WHERE ID='{$row['ID']}' AND accepted='1'";
 		$i = 0;
 		
 		$return['gameID'] = $row['ID'] . "1";
 		
-		while($notFound) {
+		while(true) {
 			$i++;
 			
 			if ($i < 30) {
 				sleep(1);
 				
 				$result = mysql_query($sql) or die(mysql_error() . "<br />" . $sql);
-				if (mysql_num_rows($result) == 0) {
-					$notFound = true;
-					
+				if (mysql_num_rows($result) > 0) {
 					$return['yourTurn'] = 'true';
 					
 					p("challenge finally found");
