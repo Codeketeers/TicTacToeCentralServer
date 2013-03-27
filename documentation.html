@@ -14,6 +14,9 @@
 			font-weight: bold;
 			color: #ff3333;
 		}
+		.strikethrough {
+			text-decoration: line-through;
+		}
 	</style>
 <head>
 
@@ -26,7 +29,8 @@
 </div>
 <div>
 	<h3>General Info</h3>
-	<span>All pages can be sent a key value pair of "Debug" = "true" to view more detailed output <br /><br />This output, however, is not currently in json form, so it may cause errors unless handled correctly.</span><br />
+	<span>All pages can be sent a key value pair of "Debug" = "true" to view more detailed step-by-step output.<br /><span class='strikethrough'>This output, however, is not currently in json form, so it may cause errors unless handled correctly.</span></span><br />
+	<br />
 	<span>Any variable inside brackets [ ] is optional for both sending and recieving</span><br />
 </div>
 <div>
@@ -56,7 +60,7 @@
 </pre>
 <pre>
 <a name='#2'  class='function'>Play - play.php</a>
-	Regular tic-tac-toe play function
+	tic-tac-toe play function
 	
 	Input -
 		<span class='inParam'>x</span> = #
@@ -70,10 +74,12 @@
 		<span class='inParam'>[flags]</span> = enum('winning move', 'draw move', 'challenge win', 'challenge move', 'accept loss')
 			-  sends extra information such as 
 				- 'winning move' when you play the winning move
-				- 'draw move' when you play the 8 move of a game where there is no winner 
+				- 'draw move' when you play the 9th move of a game where there is no winner 
 				- 'challenge win' to challenge the opponents 'winning move', if you do not send 'challenge win', then you are admitting defeat
 				- 'challenge move' to challenge the most recent opponents move, if you do not send 'challenge move', then the move is considered valid
 				- 'accept loss' after you recieve and validate a 'winning move'
+				
+				If a game makes it to the 9th turn, then the player will either send 'winning move' and x & y will be used normally or 'draw move' and x and y will be the location of the piece to move to the empty space
 				
 				*if either 'challenge move' or 'challenge win' are sent then the game is invalidated and the match is exited, x and y are also ignored
 				

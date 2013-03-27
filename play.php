@@ -33,15 +33,17 @@
 	if (isset($_REQUEST['flag'])) { //('winning move', 'draw move', 'challenge win', 'challenge move')
 		p("flag set");
 		if (strcasecmp($_REQUEST['flag'], 'winning move') == 0) {
-			$return["flag"] = 'winning move';
+			$flag = 'winning move';
 		} else if (strcasecmp($_REQUEST['flag'], 'draw move') == 0) {
-			$return["flag"] = 'draw move';
+			$flag = 'draw move';
+		} else if (strcasecmp($_REQUEST['flag'], 'accept draw') == 0) {
+			$flag = 'accept draw';
 		} else if (strcasecmp($_REQUEST['flag'], 'challenge win') == 0) {
-			$return["flag"] = 'challenge win';
+			$flag = 'challenge win';
 		} else if (strcasecmp($_REQUEST['flag'], 'challenge move') == 0) {
-			$return["flag"] = 'challenge move';
+			$flag = 'challenge move';
 		} else if (strcasecmp($_REQUEST['flag'], 'accept loss') == 0) {
-			$return["flag"] = 'accept loss';
+			$flag = 'accept loss';
 			$return['newGameID'] =  $_REQUEST['gameID'] + 1;
 			
 			//make sure they are set
@@ -53,11 +55,13 @@
 			$result = mysql_query($sql);
 			if ($row = mysql_fetch_assoc($result)) {
 				if ($row['turn'] == $_REQUEST['from']) {
-					$return['yourTurn'] = 'true';
+					$res = mysql_query("INSERT INTO move SET GameID='{$_REQUEST['gameID']}', Player='{$_REQUEST['from']}', X='{$_REQUEST['x']}', Y='{$_REQUEST['y']}', flag='{$_REQUEST['flag']}'");
+					myReturn('yourTurn', 'true');
 				}
 			} else {
 				//no more games in match
-				$return['newGameID'] = -1;
+				$res = mysql_query("INSERT INTO move SET GameID='{$_REQUEST['gameID']}', Player='{$_REQUEST['from']}', X='{$_REQUEST['x']}', Y='{$_REQUEST['y']}', flag='{$_REQUEST['flag']}'");
+				myReturn('newGameID', '-1');
 			}
 			
 		} else {
@@ -67,8 +71,8 @@
 
 	$sql = "INSERT INTO move SET GameID='{$_REQUEST['gameID']}', Player='{$_REQUEST['from']}', X='{$_REQUEST['x']}', Y='{$_REQUEST['y']}'";
 	
-	if (isset($return['flag'])) {
-		$sql .= ", flag='".$return['flag']."' ";
+	if (isset($flag)) {
+		$sql .= ", flag='".$flag."' ";
 		p("flag set and added");
 	}
 	

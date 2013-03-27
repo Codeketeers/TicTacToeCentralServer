@@ -7,16 +7,14 @@ $debug = false;
 
 if (isset($_REQUEST['debug'])) {
 	$debug = $_REQUEST['debug'];
-	if ($debug) {
-		echo "debug is true: $debug";
-	}
 }
 
 function p($val) {
 	GLOBAL $debug;
 	
 	if ($debug) {
-		echo $val;
+		//echo $val;
+		$return['debug'] .= ",$val";
 	}
 }
 
@@ -27,6 +25,8 @@ foreach($_REQUEST as &$val) {
 p(print_r($_REQUEST, true));
 
 function myReturn($key, $val) {
+	GLOBAL $return;
+
 	$return[$key] = $val;
 	echo json_encode($return);
 	exit;
@@ -53,6 +53,13 @@ function waitForPlay($gameID, $timeout, $turn) {
 			
 			if ($row['flag'] !== "") {
 				$return['flag'] = $row['flag'];
+				if ($return['flag'] == "accept loss") {
+					$return['newGameID'] = $gameID + 1;
+					waitForPlay($return['newGameID'], 30, $turn);
+					
+					echo json_encode($return);
+					exit;
+				}
 			}
 			
 			return;
