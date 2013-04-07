@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `challenges` (
   `Challenger` varchar(10) NOT NULL,
   `Challengee` varchar(10) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `accepted` int(11) NOT NULL,
+  `accepted` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
