@@ -1,9 +1,11 @@
-CREATE TRIGGER setGameIDs
 
+delimiter $$
+
+CREATE TRIGGER setGameIDs
 BEFORE INSERT ON `t3`.`t3Match`
 FOR EACH ROW
 BEGIN
-	DECLARE num1 FLOAT;
+	DECLARE num1 float;
 	
 	SET NEW.GameID1 = CONCAT(NEW.MatchID, "1");
 	SET NEW.GameID2 = CONCAT(NEW.MatchID, "2");
@@ -14,12 +16,12 @@ BEGIN
 	
 	SET @num1 = (SELECT RAND());
 	
-	if @num1 >= .5 THEN
+	IF @num1 >= .5 THEN
 		INSERT INTO game SET GameID=NEW.GameID3, PlayerA = NEW.PlayerA, PlayerB = NEW.PlayerB, Turn = NEW.PlayerA;
 	ELSE
 		INSERT INTO game SET GameID=NEW.GameID3, PlayerA = NEW.PlayerA, PlayerB = NEW.PlayerB, Turn = NEW.PlayerB;
 	END IF;
-END
+END$$
 
 CREATE TRIGGER switchMove
 BEFORE INSERT ON move
@@ -40,4 +42,4 @@ BEGIN
         END IF;
         
         CLOSE cursor1;
-END;
+END$$
