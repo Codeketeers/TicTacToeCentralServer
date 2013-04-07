@@ -103,9 +103,9 @@ CREATE TABLE IF NOT EXISTS `t3match` (
   `MatchID` int(11) NOT NULL AUTO_INCREMENT,
   `PlayerA` varchar(25) NOT NULL,
   `PlayerB` varchar(25) NOT NULL,
-  `GameID1` int(11) NOT NULL,
-  `GameID2` int(11) NOT NULL,
-  `GameID3` int(11) NOT NULL,
+  `GameID1` int(11) NOT NULL DEFAULT -1,
+  `GameID2` int(11) NOT NULL DEFAULT -1,
+  `GameID3` int(11) NOT NULL DEFAULT -1,
   PRIMARY KEY (`MatchID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
