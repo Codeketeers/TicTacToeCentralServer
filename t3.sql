@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `challenges` (
   `Challenger` varchar(10) NOT NULL,
   `Challengee` varchar(10) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `accepted` int(11) NOT NULL,
+  `accepted` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
@@ -103,9 +103,9 @@ CREATE TABLE IF NOT EXISTS `t3match` (
   `MatchID` int(11) NOT NULL AUTO_INCREMENT,
   `PlayerA` varchar(25) NOT NULL,
   `PlayerB` varchar(25) NOT NULL,
-  `GameID1` int(11) NOT NULL,
-  `GameID2` int(11) NOT NULL,
-  `GameID3` int(11) NOT NULL,
+  `GameID1` int(11) NOT NULL DEFAULT -1,
+  `GameID2` int(11) NOT NULL DEFAULT -1,
+  `GameID3` int(11) NOT NULL DEFAULT -1,
   PRIMARY KEY (`MatchID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
