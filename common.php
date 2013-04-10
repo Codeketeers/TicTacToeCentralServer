@@ -7,10 +7,12 @@ $debug = false;
 
 if (isset($_REQUEST['debug'])) {
 	$debug = $_REQUEST['debug'];
+	$return['debug'] = "Debug = true";
 }
 
 function p($val) {
 	GLOBAL $debug;
+	GLOBAL $return;
 	
 	if ($debug) {
 		//echo $val;
@@ -32,7 +34,7 @@ function myReturn($key, $val) {
 	exit;
 }
 
-function waitForPlay($gameID, $timeout, $turn) {
+function waitForPlay($gameID, $timeout, $turn, $flag = "") {
 	GLOBAL $return;
 
 	$sql = "SELECT * FROM game WHERE GameID='$gameID' AND Turn='$turn' ";
@@ -43,19 +45,30 @@ function waitForPlay($gameID, $timeout, $turn) {
 		$result = mysql_query($sql);
 		
 		if (mysql_num_rows($result) > 0) {
-			$sql = "SELECT X,Y,flag,time FROM move WHERE GameID='$gameID' ORDER BY MoveID DESC"; //get the most recent move
+			$sql = "SELECT X,Y,flag,time FROM move WHERE GameID='$gameID' ORDER BY MoveID DESC LIMIT 1"; //get the most recent move
 			$result = mysql_query($sql);
 			$row = mysql_fetch_assoc($result);
 			
 			$return['x'] = $row['X'];
 			$return['y'] = $row['Y'];
 			$return['time'] = $row['time'];
-			
-			if ($row['flag'] !== "") {
+			p("GameID: $gameID");
+			if ($flag != "") {
+				$return['flag'] = $flag;
+			} else if ($row['flag'] != "") {
 				$return['flag'] = $row['flag'];
 				if ($return['flag'] == "accept loss") {
+					p("End of game - next game or end match " . $return['flag']);
+				
 					$return['newGameID'] = $gameID + 1;
-					waitForPlay($return['newGameID'], 30, $turn);
+					$sql = "SELECT turn FROM game WHERE GameID='{$return['newGameID']}'";
+					$res = mysql_query($sql);
+					
+					if (mysql_num_rows($res) == 0) {
+						myReturn("newGameID", '-1');
+					}
+					
+					waitForPlay($return['newGameID'], 30, $turn, $return['flag']);
 					
 					echo json_encode($return);
 					exit;

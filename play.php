@@ -3,6 +3,14 @@
 	
 	$gameRow;
 	
+	if (!(is_numeric($_REQUEST['x']) AND $_REQUEST['x'] >= 0 AND $_REQUEST['x'] <= 3)) {
+		myReturn("error", "Invalid value for x. the value for x recieved was '{$_REQUEST['x']}'");
+	}
+	
+	if (!(is_numeric($_REQUEST['y']) AND $_REQUEST['y'] >= 0 AND $_REQUEST['y'] <= 3)) {
+		myReturn("error", "Invalid value for y. the value for y recieved was '{$_REQUEST['y']}'");
+	}
+	
 	//verify there is a game, they are in the game, and it is their turn
 	if (isset($_REQUEST['x']) && isset($_REQUEST['y']) && isset($_REQUEST['gameID']) && isset($_REQUEST['from'])) {
 		$sql = "SELECT * FROM game WHERE GameID='{$_REQUEST['gameID']}'";
@@ -57,13 +65,17 @@
 				if ($row['turn'] == $_REQUEST['from']) {
 					$res = mysql_query("INSERT INTO move SET GameID='{$_REQUEST['gameID']}', Player='{$_REQUEST['from']}', X='{$_REQUEST['x']}', Y='{$_REQUEST['y']}', flag='{$_REQUEST['flag']}'");
 					myReturn('yourTurn', 'true');
+				} else {
+					$res = mysql_query("INSERT INTO move SET GameID='{$_REQUEST['gameID']}', Player='{$_REQUEST['from']}', X='{$_REQUEST['x']}', Y='{$_REQUEST['y']}', flag='{$_REQUEST['flag']}'");
+					waitForPlay($return['newGameID'], 30, $_REQUEST['from']);
+					echo json_encode($return);
+					exit;
 				}
 			} else {
 				//no more games in match
 				$res = mysql_query("INSERT INTO move SET GameID='{$_REQUEST['gameID']}', Player='{$_REQUEST['from']}', X='{$_REQUEST['x']}', Y='{$_REQUEST['y']}', flag='{$_REQUEST['flag']}'");
 				myReturn('newGameID', '-1');
 			}
-			
 		} else {
 			myReturn("error","invalid flag '" . $_REQUEST['flag'] . "' set");
 		}
