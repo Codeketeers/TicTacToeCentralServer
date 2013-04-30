@@ -38,6 +38,7 @@
 	}
 
 	//check for flags
+	$flag = '';
 	if (isset($_REQUEST['flag'])) { //('winning move', 'draw move', 'challenge win', 'challenge move')
 		p("flag set");
 		if (strcasecmp($_REQUEST['flag'], 'winning move') == 0) {
