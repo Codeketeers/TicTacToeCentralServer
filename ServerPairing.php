@@ -1,4 +1,5 @@
 <?php
+
 include "common.php";
 
 if (isset($_REQUEST['challenge'])) {

@@ -1,4 +1,6 @@
 <?php
+	
+
 	include 'common.php';
 	
 	$gameRow;
