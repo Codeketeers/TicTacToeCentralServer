@@ -89,6 +89,10 @@
 		$sql .= ", flag='".$flag."' ";
 		p("flag set and added");
 	}
+	else{
+		$sql .= ", flag='' ";
+		p("no flag set or added");
+	}
 	
 	$result = mysql_query($sql) or die(mysql_error());
 	
